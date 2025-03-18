@@ -1,11 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=, initial-scale=1.0">
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Joke Generator</title>
+    <style>
+        body {
+            font-family: Monospace,Lucida Console;
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+		}
+
+        .output {
+            margin-top: 20px;
+            font-size: 18px;
+            color: black;
+			font-family: Monospace,Lucida Console;
+        }
+    </style>
 </head>
+
 <body>
-    
+    <div class="container">
+        <h1>Joke Generator</h1>
+        <input type="text" id="themeInput" placeholder="Enter a theme">
+        <button onclick="generateJoke()">Generate Joke</button>
+        <div class="output" id="output"></div>
+    </div>
+
+    <script>
+        const templates = [
+            'Why did the {theme} {action}? Because {reason}!',
+            'Why did the {theme} {action}? Because it could {action} again!',
+            'What do you call a {theme} that {action}? A {adjective} {theme}!',
+            'How does {theme} {action}? It just does!',
+            'Why did the {theme} cross the road? To {reason}!',
+            'What do you call a {theme} that {action}? A {theme} that {action} twice!'
+        ];
+
+        const actions = ["jump", "run", "dance", "sing", "laugh", "cry", "sleep", "eat", "play", "work"];
+
+        const reasons = ["it was funny", "it was bored", "it was hungry", "it was tired", "it was happy"];
+
+        const adjectives = ["crazy", "funny", "lazy", "smart", "silly", "happy", "hungry", "sleepy"];
+
+        const themes = ["cat", "dog", "science", "food", "music", "sports", "bat", "rabbit", "pig", "cows", "ant", "bee", "lion", "bear", "elephant"];
+
+function generateJoke(theme) {
+    if (!theme) {
+        return "Please enter a theme!";
+    }
+
+    if (!themes.includes(theme)) {
+        return `Sorry, I don't have any jokes about ${theme}. How about this one: Why did the cat sit on the computer? To keep an eye on the mouse!`;
+    }
+
+    const template = templates[Math.floor(Math.random() * templates.length)];
+
+    const action = actions[Math.floor(Math.random() * actions.length)];
+
+    const reason = reasons[Math.floor(Math.random() * reasons.length)];
+
+	const adjective = adjectives[Math.floor(Math.random() * adjectives.length)];
+
+    const joke = template
+        .replace(/{theme}/g, theme)
+        .replace(/{action}/g, action)
+        .replace(/{reason}/g, reason)
+        .replace(/{adjective}/g, adjective);
+
+    return joke;
+}
+
+        function generateJoke() {
+            const theme = document.getElementById("themeInput").value.trim().toLowerCase();
+            const outputDiv = document.getElementById("output");
+
+            const joke = generateJoke(theme);
+            outputDiv.innerHTML = joke;
+        }
+    </script>
 </body>
+
 </html>
